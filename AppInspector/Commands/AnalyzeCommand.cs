@@ -661,7 +661,6 @@ namespace Microsoft.AppInspector
             using (var memoryStream = new MemoryStream())
             {
                 zipFile = new ZipFile(fileStream);
-                _appProfile.MetaData.TotalFiles = (int)zipFile.Count;
                 foreach (ZipEntry zipEntry in zipFile)
                 {
                     if (zipEntry.IsDirectory)
@@ -733,8 +732,6 @@ namespace Microsoft.AppInspector
         void ProcessTarGzFile(string filename)
         {
             WriteOnce.SafeLog(string.Format("Analyzing .tar.gz file: [{0}]", filename), LogLevel.Trace);
-
-            _appProfile.MetaData.TotalFiles = GetTarGzFileCount(filename);
 
             using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             using (var gzipStream = new GZipInputStream(fileStream))
